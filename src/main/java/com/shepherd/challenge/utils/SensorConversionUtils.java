@@ -4,7 +4,6 @@ import com.shepherd.challenge.dto.SensorEvent;
 import com.shepherd.challenge.dto.SensorResponse;
 import com.shepherd.challenge.enums.SensorStatus;
 import com.shepherd.challenge.model.SensorEventLog;
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
