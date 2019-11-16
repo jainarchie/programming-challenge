@@ -5,7 +5,7 @@ import com.shepherd.challenge.TestUtils;
 import com.shepherd.challenge.dto.SensorEvent;
 import com.shepherd.challenge.dto.SensorResponse;
 import com.shepherd.challenge.handler.SensorEventHandler;
-import com.shepherd.challenge.utils.SensorConversionUtils;
+import com.shepherd.challenge.utils.SensorUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -49,7 +49,7 @@ public class SensorEventControllerTest {
     @Test
     public void testLogEventSuccess() throws Exception {
         SensorEvent sensorEvent = TestUtils.getSensorEventObject();
-        SensorResponse sensorResponse = SensorConversionUtils.getSensorResponseForSensorEvent(sensorEvent);
+        SensorResponse sensorResponse = SensorUtils.getSensorResponseForSensorEvent(sensorEvent);
         Mockito.when(sensorEventHandler.logEvent(sensorEvent)).thenReturn(sensorResponse);
         mockMvc.perform(MockMvcRequestBuilders.post("/sensor/logEvent")
                 .contentType(MediaType.APPLICATION_JSON)

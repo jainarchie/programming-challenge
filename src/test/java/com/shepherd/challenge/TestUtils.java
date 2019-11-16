@@ -2,7 +2,9 @@ package com.shepherd.challenge;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shepherd.challenge.dto.AnomalyDetectorResponse;
 import com.shepherd.challenge.dto.SensorEvent;
+import com.shepherd.challenge.enums.SensorStatus;
 import org.springframework.web.client.RestClientException;
 
 public class TestUtils {
@@ -15,6 +17,11 @@ public class TestUtils {
         sensorEvent.setTimestamp(1573900751000l);
         return sensorEvent;
     }
+
+    public static AnomalyDetectorResponse getAnomalyDetectorResponse(){
+        return new AnomalyDetectorResponse("", "", SensorStatus.NO_MODEL);
+    }
+
 
 
     public static String serializeObject(Object obj) {

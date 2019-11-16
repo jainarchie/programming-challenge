@@ -4,7 +4,7 @@ import com.shepherd.challenge.TestUtils;
 import com.shepherd.challenge.dal.SensorEventLogRepository;
 import com.shepherd.challenge.dto.SensorEvent;
 import com.shepherd.challenge.dto.SensorResponse;
-import com.shepherd.challenge.utils.SensorConversionUtils;
+import com.shepherd.challenge.utils.SensorUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class SensorEventHandlerTest {
     private SensorEventLogRepository sensorEventLogRepository;
 
     @Mock
-    private SensorConversionUtils sensorConversionUtils;
+    private SensorUtils sensorUtils;
 
     @Before
     public void setUp() {
@@ -39,7 +39,7 @@ public class SensorEventHandlerTest {
     @Test
     public void testLogEventSuccess(){
         SensorEvent sensorEvent= TestUtils.getSensorEventObject();
-        SensorResponse sensorResponse = SensorConversionUtils.getSensorResponseForSensorEvent(sensorEvent);
+        SensorResponse sensorResponse = SensorUtils.getSensorResponseForSensorEvent(sensorEvent);
         SensorResponse sensorResponseResult = sensorEventHandler.logEvent(sensorEvent);
         Assert.assertTrue(sensorResponseResult.getMessage().equalsIgnoreCase(sensorResponse.getMessage()));
         Assert.assertTrue(sensorResponseResult.getEventId().equalsIgnoreCase(sensorResponse.getEventId()));
@@ -57,7 +57,7 @@ public class SensorEventHandlerTest {
     @Test(expected = IllegalArgumentException.class)
     public void testLogEventNullObject() {
         SensorEvent sensorEvent = null;
-        Mockito.when(this.sensorConversionUtils.getSensorResponseForSensorEvent(sensorEvent)).thenThrow(IllegalArgumentException.class);
+        Mockito.when(this.sensorUtils.getSensorResponseForSensorEvent(sensorEvent)).thenThrow(IllegalArgumentException.class);
         sensorEventHandler.logEvent(sensorEvent);
     }
 
