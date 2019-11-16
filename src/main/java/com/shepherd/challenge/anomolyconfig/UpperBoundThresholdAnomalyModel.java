@@ -3,6 +3,7 @@ package com.shepherd.challenge.anomolyconfig;
 import com.shepherd.challenge.dto.AnomalyDetectorResponse;
 import com.shepherd.challenge.dto.SensorEvent;
 import com.shepherd.challenge.enums.SensorStatus;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import java.util.List;
  * Upper bound anomaly model which checks for a threshold value.
  */
 @Component
+@Data
 public class UpperBoundThresholdAnomalyModel implements AnomalyModel {
 
     public static Logger logger = LoggerFactory.getLogger(UpperBoundThresholdAnomalyModel.class);
@@ -48,6 +50,7 @@ public class UpperBoundThresholdAnomalyModel implements AnomalyModel {
      */
     @Override
     public AnomalyDetectorResponse detectAnomaly(SensorEvent sensorEvent) {
+        logger.info("starting anomaly detection in UpperBoundThresholdAnomalyModel");
         if(sensorEvent==null){
             throw new IllegalArgumentException("Sensor event  cannot be null");
         }
@@ -56,6 +59,8 @@ public class UpperBoundThresholdAnomalyModel implements AnomalyModel {
         //Check if event qualifies for the model
         if(sensorIdList.contains(sensorEvent.getSensorId())){
             logger.info("The event is qualified for UpperBoundThresholdAnomalyModel ");
+            //Since value is not exceeding threshold we identify this as not an anomaly
+            anomalyDetectorResponse.setSensorStatus(SensorStatus.NO_ANOMALY);
             if(sensorEvent.getSensorValue()==null){
                 throw new IllegalArgumentException("The sensor value cannot be null");
             }
@@ -68,8 +73,6 @@ public class UpperBoundThresholdAnomalyModel implements AnomalyModel {
                 anomalyDetectorResponse.setCause(sensorEvent.getSensorValue()+" is more than threshold value of "+ threoshold);
             }
             logger.info("The event is in desired range of values.");
-            //Since value is not exceeding threshold we identify this as not an anomaly
-            anomalyDetectorResponse.setSensorStatus(SensorStatus.NO_ANOMALY);
         }
         return anomalyDetectorResponse;
     }

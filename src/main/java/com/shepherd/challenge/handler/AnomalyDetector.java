@@ -2,6 +2,7 @@ package com.shepherd.challenge.handler;
 
 import com.shepherd.challenge.anomolyconfig.AnomalyModel;
 import com.shepherd.challenge.anomolyconfig.UpperBoundThresholdAnomalyModel;
+import com.shepherd.challenge.anomolyconfig.WindowThresholdModel;
 import com.shepherd.challenge.dto.AnomalyDetectorResponse;
 import com.shepherd.challenge.dto.SensorEvent;
 import com.shepherd.challenge.enums.SensorStatus;
@@ -27,6 +28,9 @@ public class AnomalyDetector {
     @Autowired
     UpperBoundThresholdAnomalyModel upperBoundThresholdAnomalyModel;
 
+    @Autowired
+    WindowThresholdModel windowThresholdModel;
+
 
     /**
      * This list contains all the models required to be applied on the sensors.
@@ -35,6 +39,7 @@ public class AnomalyDetector {
     @PostConstruct
     public void populateAnomalyModelMap(){
         anomalyModelList.add(upperBoundThresholdAnomalyModel);
+        anomalyModelList.add(windowThresholdModel);
     }
 
     /**
